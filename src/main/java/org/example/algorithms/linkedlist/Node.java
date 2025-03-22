@@ -1,6 +1,6 @@
 package org.example.algorithms.linkedlist;
 
-class Node<T> {
+public class Node<T> {
     T data;          // 节点存储的数据
     Node<T> next;    // 指向下一个节点的引用
 
