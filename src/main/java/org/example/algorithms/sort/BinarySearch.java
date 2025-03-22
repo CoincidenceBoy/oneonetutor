@@ -1,4 +1,4 @@
-package org.example.algorithms;
+package org.example.algorithms.sort;
 
 public class BinarySearch {
 

@@ -1,4 +1,4 @@
-package org.example.algorithms;
+package org.example.algorithms.sort;
 
 public class BubbleSort {
     // 交换数组中的两个元素

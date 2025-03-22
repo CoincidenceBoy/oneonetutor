@@ -1,4 +1,4 @@
-package org.example.algorithms;
+package org.example.algorithms.sort;
 
 public class QuickSort {
     // 进行划分的操作
