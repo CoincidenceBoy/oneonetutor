@@ -9,7 +9,8 @@ public class LinkedListUtils<T> {
             return head; // 空链表或只有一个节点，直接返回
         }
 
-        Node<T> dummy = new Node<>(null); // 创建虚拟头节点
+        // 虚拟头结点是一种思想,实际传给你的肯定是头结点,多数情况需要自己手动创建虚拟头节点来辅助操作
+        Node<T> dummy = new Node<>(null);
         Node<T> now = head; // 当前节点
         Node<T> next; // 下一个节点
 
@@ -25,6 +26,28 @@ public class LinkedListUtils<T> {
 
         return dummy.next; // 返回翻转后的链表头节点
     }
+
+//    public static <T> Node<T> reverseListByHeadInsert(Node<T> head) {
+//        if (head == null || head.next == null) {
+//            return head; // 空链表或只有一个节点，直接返回
+//        }
+//
+//        Node<T> prev = null; // 前驱节点
+//        Node<T> now = head; // 当前节点
+//        Node<T> next; // 下一个节点
+//
+//        while (now != null) {
+//            next = now.next; // 保存下一个节点
+//
+//            // 头插法：将当前节点插入到 prev 和 head 之间
+//            now.next = prev;
+//            prev = now;
+//
+//            now = next; // 移动到下一个节点
+//        }
+//
+//        return prev; // 返回翻转后的链表头节点
+//    }
 
     // 尾插法原地翻转单链表（静态方法）
     public static <T> Node<T> reverseListByTailInsert(Node<T> head) {
