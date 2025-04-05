@@ -189,17 +189,18 @@ END FUNCTION
 
 ```code
 // Binary Tree
-    1
-   / \
-  2   3
+  10896
+   /  \
+  29   3
  / \
 4   5
+
 // Binary Search Tree
-     4
-    / \
-   2   6
-  / \ / \
- 1  3 5 7
+       40
+    /      \
+   21     60
+  / \     / \
+ 1  32 54 89
 ```
 
 ### Question2-(b)
@@ -214,7 +215,6 @@ END FUNCTION
 
 ```java
 // for BST
-
 
 public int max(Node t) {
     // Iterative approach to find max in BST
@@ -285,7 +285,7 @@ public int max(Node t) {
 #### *Suggest answer*
 
 > Tree A leaf nodes（right→left）: 6 7 4 
-> Tree B leaf nodes（right→left）: 9 8 11 4 
+> Tree B leaf nodes（right→left）: 10 9 8 11 4 
 
 **It recursively prints leaf nodes from right to left.**
 
@@ -296,12 +296,13 @@ public int max(Node t) {
 #### *Suggest answer*
 
 ```java
-public Node deSerialise(ArrayList<String> list) {
-    return deSerialiseRecursive(list);
+public void deSerialise(ArrayList<String> list) {
+    this.root = deSerialiseRecursive(list);
 }
 
 private Node deSerialiseRecursive(ArrayList<String> list) {
-    if (list.isEmpty()) return null;
+    if (list.isEmpty()) 
+      return null;
 
     String val = list.remove(0);
     if (val.equals("$")) {
@@ -333,7 +334,7 @@ private Node deSerialiseRecursive(ArrayList<String> list) {
 #### Suggest answer
 
 1. **Purpose**: Traversal algorithms systematically visit all nodes in a graph to analyze or search data (e.g., finding paths).
-2. **BFS**: Explores nodes level-by-level using a queue, ensuring shortest-path discovery in unweighted graphs.
+2. **BFS**: Explores nodes level-by-level using a queue, ensuring shortest-path discovery in **unweighted graphs**.
 3. **BFS vs. DFS**: BFS guarantees the shortest path in unweighted graphs; DFS cannot without additional steps.
 
 ### Question3-(c)
@@ -415,40 +416,31 @@ public class StringSubtract {
 // adjacency matrix
    0 1 2 3 4 5 6
 0 [0,1,0,0,0,0,0]
-1 [1,0,1,1,0,1,0]
-2 [0,1,0,1,0,0,0]
-3 [0,1,1,0,1,0,0]
-4 [0,0,0,1,0,0,0]
-5 [0,1,0,0,0,0,1]
-6 [0,0,0,0,0,1,0]
-     
- int[][] adjacencyMatrix = {
-  {0, 1, 0, 0, 0, 0, 0},  // 节点0
-  {1, 0, 1, 1, 0, 1, 0},  // 节点1
-  {0, 1, 0, 0, 1, 0, 0},  // 节点2
-  {0, 1, 0, 0, 1, 0, 1},  // 节点3
-  {0, 0, 1, 1, 0, 0, 0},  // 节点4
-  {0, 1, 0, 0, 0, 0, 1},  // 节点5
-  {0, 0, 0, 1, 0, 1, 0}   // 节点6
-  };
+1 [1,0,1,1,0,0,0]
+2 [0,1,0,1,1,0,0]
+3 [0,1,1,0,0,1,0]
+4 [0,0,1,0,0,0,1]
+5 [0,0,0,1,0,0,1]
+6 [0,0,0,0,1,1,0]
+    
      
 //adjacency list
 0 → [1]
-1 → [0,2,3,5]
-2 → [1,3]
-3 → [1,2,4]
-4 → [3]
-5 → [1,6]
-6 → [5]
+1 → [0,2,3]
+2 → [1,3,4]
+3 → [1,2,5]
+4 → [2,6]
+5 → [3,6]
+6 → [4,5]
 
   List<List<Integer>> adjacencyList = new ArrayList<>();
   adjacencyList.add(List.of(1));         // 节点0
-  adjacencyList.add(List.of(0, 2, 3, 5)); // 节点1
-  adjacencyList.add(List.of(1, 4));      // 节点2
-  adjacencyList.add(List.of(1, 4, 6));   // 节点3
-  adjacencyList.add(List.of(2, 3));      // 节点4
-  adjacencyList.add(List.of(1, 6));      // 节点5
-  adjacencyList.add(List.of(3, 5));      // 节点6
+  adjacencyList.add(List.of(0, 2, 3)); // 节点1
+  adjacencyList.add(List.of(1, 3, 4));      // 节点2
+  adjacencyList.add(List.of(1, 2, 5));   // 节点3
+  adjacencyList.add(List.of(2, 6));      // 节点4
+  adjacencyList.add(List.of(3, 6));      // 节点5
+  adjacencyList.add(List.of(4, 5));      // 节点6
 ```
 
 ### Question1-(d)
@@ -487,7 +479,7 @@ public class GraphConnectivityChecker {
 
         // 检查最终可达性
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
+            for (int j = 0; j < i; j++) {
                 if (reachability[i][j] == 0) {
                     return false;
                 }
