@@ -244,3 +244,7 @@ A.O(logn) B.O(n) C.(nlogn) D.O(n^2)
 
 
 
+![image-20250427215119712](./work1-复杂度和递归.assets/image-20250427215119712.png)
+
+<img src="./work1-复杂度和递归.assets/image-20250427215132808.png" alt="image-20250427215132808" style="zoom:50%;" />
+
