@@ -1,5 +1,3 @@
-
-
 # *Statement and Notations* 声明和记号📌
 
 * ✅对于一段文字来说,如果没有特殊标记emoji表情(如❗️等)或者==特殊颜色标记==等,了解内容即可.
@@ -41,3 +39,82 @@
     > ❗️算法分析场景默认使用大$O$符号,描述**最坏情况下的性能上界**（算法运行时间/空间消耗的**最高增长级别**）,一般开发者更关心**最坏情况下系统能否扛住压力**（而非平均或最优情况）!
     >
     > <img src="./CSCM12.assets/image-20250419124245518.png" alt="image-20250419124245518" style="zoom:50%;" />
+
+## 主定理（Master Theorem）
+
+<img src="./CSCM12.assets/image-20250430204813106.png" alt="image-20250430204813106" style="zoom:50%;" />
+
+# Techniques for coming up with algorithms [提出算法的技术]
+
+## *Recursion* [递归]
+
+| 英文                                                         | 中文                                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| **A function implementation is called recursive when the function calls itself during execution. It could be in the body of the function, or, in the case of mutually recursive functions, in another function.** | **当函数在执行过程中调用自身时，该函数的实现称为“递归”。这种调用可以出现在函数体内部，或者（对于相互递归的函数）出现在另一个函数中。** |
+| **To terminate, recursive functions will typically call themselves on strictly smaller arguments. There are exception to this pattern, e.g. when the function involves some input-output interactions with the user/environment.** | **为了保证终止，递归函数通常会在“严格更小”的参数上调用自身。但也有例外，例如当函数涉及与用户或环境进行某些输入/输出交互时。** |
+| **When programming, recursion is essentially as powerful as iteration (loops). Choosing one over the other in a first implementation is mostly a matter of convenience. Recursion can be used to more easily implement some control flows, and compiling recursive functions into iterative ones is typically a bit more challenging than the other way around (essentially because one needs to maintain a stack structure to emulate the function calls).** | **在编程中，递归的功能本质上与迭代（循环）同等。在首次实现时选择哪种方式主要取决于便利性。递归可以更轻松地实现某些控制流，而将递归函数编译为迭代形式通常比将迭代改写为递归更具挑战性——这是因为需要维护一个栈结构来模拟函数调用。** |
+| **Recursion can lead to some natural solutions using the following recipe: if I can solve small instances of my problem, and for any big instance, I can solve it assuming that I can solve all strictly smaller instances, then I can solve all instances.** | **递归能产生一些自然的解法，可按以下“套路”进行：如果我能解决问题的所有小规模实例，并且对于任何大规模实例，在假设我已能解决所有严格更小的实例的前提下也能解决它，那么我就能解决所有实例。** |
+
+
+
+## *Dynamic programming/memoization* [动态规划 / 记忆化]
+
+| 英文                                                         | 中文                                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Sometimes, there is a natural recursive solution that would have **redundant recursive calls**. | 有时候存在一种自然的递归解法，但会产生**冗余的递归调用**。   |
+| **Dynamic programming or memoization is essentially the technique that consists in avoiding these kind of redundant calls.** | **动态规划或记忆化，本质上是一种用于避免此类冗余调用的技术。** |
+
+<img src="./CSCM12.assets/image-20250430211557274.png" alt="image-20250430211557274" style="zoom:50%;" />
+
+| 英文                                                         | 中文                                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| **One easy way of doing it is modifying the recursive function by looking up in a table before doing a recursive call. On the above example it may be done as follows:** | **一种简单的做法，是在每次递归调用前先在表中查找，其实现在上面的例子中可按如下方式实现：** |
+| **One may use ArrayList and static variables to get cleaner implementations. If the input is a complex datatype, using a hash table for memoization is a good solution.** | **可以使用 ArrayList 和 static 变量来获得更简洁的实现；若输入为复杂数据类型，则使用哈希表来做记忆化是一个很好的方案。** |
+| **The complexity analyses are typically less straightforward to carry to compute accurate bounds; usually the idea is to sum the contribution of each subinputs.** | **复杂度分析通常不那么直观，难以给出精确界；一般思路是把每个子输入的贡献累加起来。** |
+
+<img src="./CSCM12.assets/image-20250430211808794.png" alt="image-20250430211808794" style="zoom:50%;" />
+
+| 英文原文                                                     | 中文翻译                                       |
+| ------------------------------------------------------------ | ---------------------------------------------- |
+| **Sometimes one can also use that as inspiration to get iterative implementation like the following:** | **有时也可以以此为灵感，得到如下的迭代实现：** |
+
+<img src="./CSCM12.assets/image-20250430212203240.png" alt="image-20250430212203240" style="zoom:50%;" />
+
+# Sorting algorithm [排序算法]
+
+## concepts [概念]
+
+| 英文                                                         | 中文                                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| **Sorting makes sense for several datastructures such as arrays and lists.** | **对数组和列表等多种数据结构进行排序是有意义的。**           |
+| **One can sort arrays of integers, but also complex datatypes if a custom comparison function is provided (i.e. something extending a Comparable interface in Java).** | **可以对整数数组排序，也可以对复杂数据类型进行排序，前提是提供了自定义比较函数（例如在 Java 中扩展 Comparable 接口的类）。** |
+| **Sorting by comparisons is necessarily Ω(n log(n)).**       | **基于比较的排序在最优情况下也必然需要 Ω(n log n) 的时间复杂度。** |
+| **If one only needs to sort according to a restricted range of integers, there are linear-time sorting algorithms.** | **如果只需要对限制范围内的整数进行排序，则存在线性时间的排序算法。** |
+| **A sorting algorithm is \*in-place\* if it does not require allocating any new arrays/collections of non-constant size; those algorithms typically operate with space complexity O(log(n)).** | **如果排序算法不需要分配任何新的、大小非固定的数组或集合，则称其为“就地”排序；这类算法通常具有 O(log n) 的空间复杂度。** |
+
+## Classic algorithm [经典算法]
+
+| 英文原文                                                     | 中文翻译                                                     |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| **Insertion sort** is a quadratic sorting algorithm that works using an auxiliary function that inserts an element in an already ordered collection. This is fairly efficient in practice over small linked lists. | **插入排序** 是一种二次时间排序算法，通过辅助函数将元素插入到已排序的集合中来工作。在小规模链表上，该方法在实践中相当高效。 |
+| Over arrays, **bubble sort** is another simple quadratic-time sorting algorithm. | 在数组上，**冒泡排序** 是另一种简单的二次时间排序算法。      |
+| **Merge sort** is a divide-and-conquer sorting algorithm which relies on a linear-time merging procedure. Its running-time is Θ(n log n). If the input and output is a linked list, this can be done in-place. This is a stable sorting algorithm. | **归并排序** 是一种分治法排序算法，依赖于线性时间的合并过程。其运行时间为 Θ(n log n)。若输入和输出均为链表，则可就地完成。它是一种稳定排序。 |
+| **Quicksort** is another divide-and-conquer sorting algorithm which first picks a distinguished pivot and recursively sorts the elements smaller and larger than the pivot. It is easy to implement it in-place if the pivot selection strategy is simple. The worst case running time is quadratic (attained for an already-sorted input), but on average this runs in Θ(n log n). | **快速排序** 是另一种分治法排序算法，先选取一个主元，然后递归地对主元两侧的较小和较大元素进行排序。若主元选择策略简单，很容易实现就地排序。最坏情况下（如输入已排序）运行时间为二次，但平均情况下为 Θ(n log n)。 |
+| **Heapsort** is a sorting algorithm that amounts to inserting all the elements of the input in a min-heap and then extracting the root repeatedly to construct the sorted output. This works in Θ(n log n) and is easy to implement in-place in an array. | **堆排序** 是一种排序算法，将所有输入元素插入最小堆，然后反复取出堆顶构造有序输出。其运行时间为 Θ(n log n)，且在数组上易于实现就地排序。 |
+| **Counting sort** is a non-comparison sorting algorithm that counts the occurrences of each key and computes positions to place elements in **linear time**. | **计数排序** 是一种非比较排序算法，通过统计每个键的出现次数并计算元素在输出中的位置，实现在**线性时间**内排序。 |
+
+> 1. **频率统计**：遍历数组，向 HashMap 插入或更新频率，耗时 O(n)（HashMap 的 get/put 平均 O(1)）。
+> 2. **键排序**：把 K 个不同的键收集到 List，再用 Collections.sort 排序，耗时 O(K log K)。
+> 3. **输出重建**：遍历排序后的键并按频次填充原数组，耗时 O(n)。
+>
+> → 总体：O(n + K log K)。
+>
+> - 当 K （不同值的个数）很小（例如常数级）时，可以近似看作 O(n)；
+> - 但在最坏情况下 K≈n 时，就退化到 O(n log n)，不再是线性。
+>
+>
+> 拓展: 
+>
+> 如果想要做到真正的线性（O(n + M)，M 为键值范围大小），就要用「直接索引计数」的方式，而不是先把键收集再排序 最坏情况[-intmax ~ intmax]
+>
+> 如果待排序元素的**键值范围非常有限**（例如只在 0~100 之间），计数排序常常是最快的方案。
