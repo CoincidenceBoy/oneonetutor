@@ -14,7 +14,7 @@
 
 * **Space complexity** corresponds to the extra memory required to run a particular function on top of what was allocated for the argument. This is obtained by summing the size of the memory representation of all the variables simultaneously declared in a block of code during the execution; for an int and other basic datatypes, this will be constant, but not for complex datatypes and arrays.
 
-  * > 空间复杂度对应于在参数分配的内存之外，运行特定函数所需的额外内存。它的计算方式是累加执行过程中在代码块内同时声明的所有变量的内存表示大小；对于 `int` 和其他基本数据类型，这个大小是固定的，但对于复杂数据类型和数组则不然。
+  * > 空间复杂度对应于在参数分配的内存之外，运行特定函数所需的额外内存。它的计算方式是累加执行过程中在代码块内同时声明的所有变量的内存表示大小；[不计算乘法常数 4n 8n]对于 `int` 和其他基本数据类型，这个大小是固定的，但对于复杂数据类型和数组则不然。
 
 * We abstract time/space complexity as a function that maps an input size to a running time/memory consumption. We usually consider the worst-case complexity, i.e., we take the function $n \longmapsto \max\limits_{I \text{ of size } n} \text{running time over } I$. It may be of interest to also look at average-case complexity (where the max is replaced by an expectation).
 
@@ -35,14 +35,136 @@
     > - f(n) = $Ω$(g(n)) 表示 f(n) 的增长率不低于 g(n)（下极限大于零）
     > - f(n) = $Θ$(g(n)) 表示 f(n) 与 g(n) 同阶增长（同时满足 O 和 Ω）
     > - f(n) = $o$(g(n)) 表示 f(n) 的增长率严格小于 g(n)（极限为零）
+    >   - <img src="./CSCM12.assets/image-20250503200504596.png" alt="image-20250503200504596" style="zoom: 33%;" />
     >
-    > ❗️算法分析场景默认使用大$O$符号,描述**最坏情况下的性能上界**（算法运行时间/空间消耗的**最高增长级别**）,一般开发者更关心**最坏情况下系统能否扛住压力**（而非平均或最优情况）!
+    >
+    > ❗️算法分析场景默认使用大$O$符号,描述**最坏情况下的性能上界**（算法运行时间/空间消耗的**最高增长级别**）,一般开发者更关心**最坏情况下系统能否扛住压力**（而非平均或最优情况）!  快排需要考虑平均情况,我们让快排的大$O$符号取他的平均时间 O(nlogn)
     >
     > <img src="./CSCM12.assets/image-20250419124245518.png" alt="image-20250419124245518" style="zoom:50%;" />
 
 ## 主定理（Master Theorem）
 
 <img src="./CSCM12.assets/image-20250430204813106.png" alt="image-20250430204813106" style="zoom:50%;" />
+
+## Related Examples
+
+![2](./CSCM12.assets/image-20250503201427749-6274469.png)
+
+<img src="./CSCM12.assets/image-20250503201537680.png" alt="image-20250503201537680" style="zoom:50%;" />
+
+<img src="./CSCM12.assets/image-20250503201628793.png" alt="image-20250503201628793" style="zoom: 67%;" />
+
+<img src="./CSCM12.assets/image-20250503201711103.png" alt="image-20250503201711103" style="zoom:50%;" />
+
+![image-20250306152625882](./CSCM12.assets/image-20250306152625882.png)
+
+<img src="./CSCM12.assets/image-20250306152702095.png" alt="image-20250306152702095" style="zoom:67%;" />
+
+> 0+1+...+(n-1) = O(n(n−1)/2) = O(n^2)
+
+<img src="./CSCM12.assets/image-20250306152914412.png" alt="image-20250306152914412" style="zoom:67%;" />
+
+> n = 0  [0, 0]
+> n = 1  [1, 0]
+> n = 2  [2, 0]
+> n = 3  [3, 0]
+> n = 4  [4, 0]
+> n = 5  [5, 0]    每次递归调用的操作是常数时间操作，数组操作也是常数时间。递归的深度为 `n`，所以时间复杂度是 **O(n)**
+
+<img src="./CSCM12.assets/image-20250306153405233.png" alt="image-20250306153405233" style="zoom:67%;" />
+
+> 无限递归，栈溢出。 若改为 return bla3(n-1) + bla(n-2) 为二叉树式递归，O(2^n)
+>
+> ```java
+> // 斐波那契数列
+> static int bla3(int n) {
+>  if (n <= 0) {
+>      return 0;
+>  } else if (n == 1) {
+>      return 1;
+>  } else {
+>      return bla3(n - 1) + bla3(n - 2);
+>  }
+> }
+> ```
+
+<img src="./CSCM12.assets/image-20250306154002042.png" alt="image-20250306154002042" style="zoom:67%;" />
+
+> 奇数直接返回，偶数每次除2，递归深度为 O(log⁡n)
+
+<img src="./CSCM12.assets/image-20250306154249440.png" alt="image-20250306154249440" style="zoom:67%;" />
+
+> 该题目存在严重越界风险。
+>
+> ```java
+> static void fun3(int[][] arr) {
+>  final int n = arr.length;
+>  if (n == 0) 
+>      return;
+>  for(int i=0; i<n; i++)
+>      if(arr[i].length != n)
+>          return;
+> 
+>  for (int k = 0; k < n; k+=2) {
+>      if (k % 2 == 0) {
+>          for (int j = n - 1; j >= 0; --j) //越界风险
+>              arr[k][j] = arr[j][k];
+>      } else { // else 压根走不到
+>          for (int j = 0; j < Math.sqrt(n); ++j)
+>              arr[j * j][k] = arr[k - 1][j];
+>      }
+>  }
+> }
+> ```
+>
+> 修改后：
+>
+> 外层循环：n/2
+> 内层循环：k % 2 == 0，n次
+> 故O(n^2)
+
+<img src="./CSCM12.assets/image-20250306155658494.png" alt="image-20250306155658494" style="zoom:67%;" />
+
+> static int fun4(int n) {
+>  if (n <= 5)
+>      return d; 
+>  int r = 0;
+>  for (int i = n; i > 2; --i)   // O(n)
+>      r = (n + 8 * r) % 3;
+>  return (fun4(n / 3) + fun4(n / 3 - 1) * r) % 55;
+> }
+>
+> 递归深度 logn  每一次都是n  O(nlogn)
+
+![image-20250503203314286](./CSCM12.assets/image-20250503203314286.png)
+
+<img src="./CSCM12.assets/image-20250503203455539.png" alt="image-20250503203455539" style="zoom:50%;" />
+
+![image-20250503203953563](./CSCM12.assets/image-20250503203953563.png)
+
+![image-20250503204044285](./CSCM12.assets/image-20250503204044285.png)
+
+![image-20250503204119684](./CSCM12.assets/image-20250503204119684.png)
+
+![image-20250503204304391](./CSCM12.assets/image-20250503204304391.png)
+
+![image-20250503204652330](./CSCM12.assets/image-20250503204652330.png)
+
+![image-20250503204729931](./CSCM12.assets/image-20250503204729931.png)
+
+> 5 0 3
+
+![image-20250503205139054](./CSCM12.assets/image-20250503205139054.png)
+
+![image-20250503205501995](./CSCM12.assets/image-20250503205501995-6276902.png)
+
+![image-20250503205515269](./CSCM12.assets/image-20250503205515269.png)
+
+![image-20250503205545928](./CSCM12.assets/image-20250503205545928.png)
+
+question 4 暂时跳过, 分治算法一般就是递归树 树的高度是logn --->  nlogn
+
+![image-20250503205714088](./CSCM12.assets/image-20250503205714088.png)
 
 # Techniques for coming up with algorithms [提出算法的技术]
 
@@ -54,8 +176,6 @@
 | **To terminate, recursive functions will typically call themselves on strictly smaller arguments. There are exception to this pattern, e.g. when the function involves some input-output interactions with the user/environment.** | **为了保证终止，递归函数通常会在“严格更小”的参数上调用自身。但也有例外，例如当函数涉及与用户或环境进行某些输入/输出交互时。** |
 | **When programming, recursion is essentially as powerful as iteration (loops). Choosing one over the other in a first implementation is mostly a matter of convenience. Recursion can be used to more easily implement some control flows, and compiling recursive functions into iterative ones is typically a bit more challenging than the other way around (essentially because one needs to maintain a stack structure to emulate the function calls).** | **在编程中，递归的功能本质上与迭代（循环）同等。在首次实现时选择哪种方式主要取决于便利性。递归可以更轻松地实现某些控制流，而将递归函数编译为迭代形式通常比将迭代改写为递归更具挑战性——这是因为需要维护一个栈结构来模拟函数调用。** |
 | **Recursion can lead to some natural solutions using the following recipe: if I can solve small instances of my problem, and for any big instance, I can solve it assuming that I can solve all strictly smaller instances, then I can solve all instances.** | **递归能产生一些自然的解法，可按以下“套路”进行：如果我能解决问题的所有小规模实例，并且对于任何大规模实例，在假设我已能解决所有严格更小的实例的前提下也能解决它，那么我就能解决所有实例。** |
-
-
 
 ## *Dynamic programming/memoization* [动态规划 / 记忆化]
 
@@ -92,7 +212,13 @@
 | **If one only needs to sort according to a restricted range of integers, there are linear-time sorting algorithms.** | **如果只需要对限制范围内的整数进行排序，则存在线性时间的排序算法。** |
 | **A sorting algorithm is \*in-place\* if it does not require allocating any new arrays/collections of non-constant size; those algorithms typically operate with space complexity O(log(n)).** | **如果排序算法不需要分配任何新的、大小非固定的数组或集合，则称其为“就地”排序；这类算法通常具有 O(log n) 的空间复杂度。** |
 
-## Classic algorithm [经典算法]
+## Classic sort algorithm [经典算法]
+
+> 核心的思想 + 时间/空间复杂度
+>
+> 插入排序: 维护一个已排序的子数组,每次从未排序的子数组里面选一个最小(升序排序)的数,追加到已排序的子数组里,直至已排序的子数组的长度为整个数组长度. O(n^2) O(1)
+>
+> 
 
 | 英文原文                                                     | 中文翻译                                                     |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -107,7 +233,7 @@
 > 2. **键排序**：把 K 个不同的键收集到 List，再用 Collections.sort 排序，耗时 O(K log K)。
 > 3. **输出重建**：遍历排序后的键并按频次填充原数组，耗时 O(n)。
 >
-> → 总体：O(n + K log K)。
+> → 总体：O(n + K log K)。最坏情况K=n 那么就是O(nlogn)的
 >
 > - 当 K （不同值的个数）很小（例如常数级）时，可以近似看作 O(n)；
 > - 但在最坏情况下 K≈n 时，就退化到 O(n log n)，不再是线性。
@@ -118,3 +244,12 @@
 > 如果想要做到真正的线性（O(n + M)，M 为键值范围大小），就要用「直接索引计数」的方式，而不是先把键收集再排序 最坏情况[-intmax ~ intmax]
 >
 > 如果待排序元素的**键值范围非常有限**（例如只在 0~100 之间），计数排序常常是最快的方案。
+
+
+
+# Catch exceptions
+
+ 
+
+# Test case
+
