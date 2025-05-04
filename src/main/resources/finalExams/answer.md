@@ -592,7 +592,7 @@ public class GraphConnectivityTimeFinder {
 
 ![image-20250405154350846](./answer.assets/image-20250405154350846.png)
 
->  return 0+1+2+3+4 = 10; 
+>  return 0+0+1+2+3+4 = 10; 
 
 ### Question2-(b)
 
@@ -631,16 +631,17 @@ public class Solution {
     }
     
     private static int calculate(int d, int k) {
+      
+         // Return cached result if available
+        if (memo[d][k] != -1) {
+            return memo[d][k];
+        }
+      
         // Base case 1: Invalid partition configurations
         if (d == 0 && k > 0 || k < 0 || d < 0) return 0;
         
         // Base case 2: Valid completed partition
         if (d == 0 && k == 0) return 1;
-        
-        // Return cached result if available
-        if (memo[d][k] != null) {
-            return memo[d][k];
-        }
         
         // Recursively compute sum of all valid partitions
         int res = 0;
@@ -655,7 +656,7 @@ public class Solution {
 }
 ```
 
-time complexity: $O(d\times k^2)$
+time complexity:  $O(d \times k \times k )$ = $O(d\times k^2)$
 
 space comlexity: $O(d \times k)$
 

@@ -173,7 +173,7 @@ question 4 暂时跳过, 分治算法一般就是递归树 树的高度是logn -
 | 英文                                                         | 中文                                                         |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | **A function implementation is called recursive when the function calls itself during execution. It could be in the body of the function, or, in the case of mutually recursive functions, in another function.** | **当函数在执行过程中调用自身时，该函数的实现称为“递归”。这种调用可以出现在函数体内部，或者（对于相互递归的函数）出现在另一个函数中。** |
-| **To terminate, recursive functions will typically call themselves on strictly smaller arguments. There are exception to this pattern, e.g. when the function involves some input-output interactions with the user/environment.** | **为了保证终止，递归函数通常会在“严格更小”的参数上调用自身。但也有例外，例如当函数涉及与用户或环境进行某些输入/输出交互时。** |
+| **To terminate, recursive functions will typically call themselves on strictly smaller arguments. ** 往递归出口(终止条件)去努力. | **为了保证终止，递归函数通常会在“严格更小”的参数上调用自身。** |
 | **When programming, recursion is essentially as powerful as iteration (loops). Choosing one over the other in a first implementation is mostly a matter of convenience. Recursion can be used to more easily implement some control flows, and compiling recursive functions into iterative ones is typically a bit more challenging than the other way around (essentially because one needs to maintain a stack structure to emulate the function calls).** | **在编程中，递归的功能本质上与迭代（循环）同等。在首次实现时选择哪种方式主要取决于便利性。递归可以更轻松地实现某些控制流，而将递归函数编译为迭代形式通常比将迭代改写为递归更具挑战性——这是因为需要维护一个栈结构来模拟函数调用。** |
 | **Recursion can lead to some natural solutions using the following recipe: if I can solve small instances of my problem, and for any big instance, I can solve it assuming that I can solve all strictly smaller instances, then I can solve all instances.** | **递归能产生一些自然的解法，可按以下“套路”进行：如果我能解决问题的所有小规模实例，并且对于任何大规模实例，在假设我已能解决所有严格更小的实例的前提下也能解决它，那么我就能解决所有实例。** |
 
@@ -181,7 +181,7 @@ question 4 暂时跳过, 分治算法一般就是递归树 树的高度是logn -
 
 | 英文                                                         | 中文                                                         |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Sometimes, there is a natural recursive solution that would have **redundant recursive calls**. | 有时候存在一种自然的递归解法，但会产生**冗余的递归调用**。   |
+| Sometimes, there is a natural recursive solution that would have ==**redundant recursive calls**==. | 有时候存在一种自然的递归解法，但会产生**冗余的递归调用**。   |
 | **Dynamic programming or memoization is essentially the technique that consists in avoiding these kind of redundant calls.** | **动态规划或记忆化，本质上是一种用于避免此类冗余调用的技术。** |
 
 <img src="./CSCM12.assets/image-20250430211557274.png" alt="image-20250430211557274" style="zoom:50%;" />
@@ -192,7 +192,7 @@ question 4 暂时跳过, 分治算法一般就是递归树 树的高度是logn -
 | **One may use ArrayList and static variables to get cleaner implementations. If the input is a complex datatype, using a hash table for memoization is a good solution.** | **可以使用 ArrayList 和 static 变量来获得更简洁的实现；若输入为复杂数据类型，则使用哈希表来做记忆化是一个很好的方案。** |
 | **The complexity analyses are typically less straightforward to carry to compute accurate bounds; usually the idea is to sum the contribution of each subinputs.** | **复杂度分析通常不那么直观，难以给出精确界；一般思路是把每个子输入的贡献累加起来。** |
 
-<img src="./CSCM12.assets/image-20250430211808794.png" alt="image-20250430211808794" style="zoom:50%;" />
+<img src="./CSCM12.assets/image-20250504183031800.png" alt="image-20250504183031800" style="zoom:50%;" />
 
 | 英文原文                                                     | 中文翻译                                       |
 | ------------------------------------------------------------ | ---------------------------------------------- |
@@ -247,9 +247,181 @@ question 4 暂时跳过, 分治算法一般就是递归树 树的高度是logn -
 
 
 
-# Catch exceptions
+# *Trees*
+
+## Tree basic
+
+![image-20250504143340460](./CSCM12.assets/image-20250504143340460.png)
+
+* **Variations**: Bounding the number of nodes, not caring about the order of children, different kinds of labellings...
+
+  * > **变体**：限制节点数量、忽略子节点顺序、不同标签类型……
+
+* On a mathematical level, trees can be characterized as those undirected graphs with a designated root vertex and with* *exactly one path between any two vertices.
+
+  * > 在数学层面，树可定义为无向图，其具有一个指定的根顶点，且任意两顶点间有且仅有一条路径。
+
+## *Representation in OO[Object-oriented 面向对象] languages*
+
+<img src="./CSCM12.assets/image-20250504143838134.png" alt="image-20250504143838134" style="zoom: 50%;" />
+
+<img src="./CSCM12.assets/image-20250504144031017.png" alt="image-20250504144031017" style="zoom:50%;" />
+
+<img src="./CSCM12.assets/image-20250504144257006.png" alt="image-20250504144257006" style="zoom:50%;" />
+
+![image-20250504144542459](./CSCM12.assets/image-20250504144542459.png)
+
+- **数组表示**：  
+`[1, 10, 2, 51, null, 3, 88]`  
+- `0`: 1（根）  
+- `1`: 10（1的左子）  
+- `2`: 2（1的右子）  
+- `3`: 51（10的左子）  
+- `4`: null（10的右子，空缺）  
+- `5`: 3（2的左子）  
+- `6`: 88（2的右子） 
+
+<img src="./CSCM12.assets/image-20250504144621873.png" alt="image-20250504144621873" style="zoom:50%;" /> 
+
+**优缺点对比**
+
+| **优点**                                 | **缺点**                                   |
+| ---------------------------------------- | ------------------------------------------ |
+| ✅ **O(1)快速访问**：通过索引直接定位节点 | ❌ **内存浪费**：空缺位置需用 `null` 填充   |
+| ✅ **适合满层树**（如堆结构）             | ❌ **动态扩展成本高**：插入/删除需移动元素  |
+| ✅ **缓存友好**：连续内存提升访问效率     | ❌ **非满树效率低**：稀疏树导致大量空间闲置 |
+
+## *Tree-like datastructures*
+
+![image-20250504150921092](./CSCM12.assets/image-20250504150921092.png)
+
+> **定义4（最小堆）**：最小堆是一种满足以下条件的二叉树：
+>
+> - 每个节点的标签值**小于**其子节点的标签值。
+> - 除最后一层外，所有层必须完全填满。
+> - 最后一层从左到右填充，直到某个节点为止。
+>   最小堆支持在**对数时间**​（与堆的深度成正比）内插入和删除根节点。
+
+![image-20250504151048950](./CSCM12.assets/image-20250504151048950.png)
+
+> **定义5（二叉搜索树）**：二叉搜索树是一种用整数标记的二叉树，满足：
+>
+> - 对任意节点，其左子节点值 *l*≤*x*≤ 右子节点值 *r*。
+>   更高级的结构（如AVL树、红黑树）能保持树深度为对数级，从而支持插入、删除、查找等操作在 O(log n) 时间内完成（如Java中的 `TreeSet` 类）。
+>
+> <img src="./CSCM12.assets/image-20250504151139591.png" alt="image-20250504151139591" style="zoom:50%;" />
+
+## *Dynamic arrays*
+
+![image-20250504151430881](./CSCM12.assets/image-20250504151430881.png)
+
+> 基于数组的覆盖结构，采用智能内存管理策略。
+>
+> 不变量：internalArray 的容量为 2^⌈log₂(size)⌉（即不小于 size 的最小2的幂次方）。
+>
+> **关键点**：
+>
+> - **动态扩容**：当插入元素超出当前容量时，内部数组会按2的幂次扩容（如 `size=5` 时容量扩至8）。
+> - **内存效率**：避免频繁重新分配内存，平衡空间与时间开销。
+
+![image-20250504151809163](./CSCM12.assets/image-20250504151809163.png)
+
+> - 单次插入元素的最坏时间复杂度为 **O(n)**（因需扩容和复制数据）。
+> - 插入操作的**摊还复杂度**为 **O(1)**（均摊到每次操作后接近常数时间）。
+> - 其他操作（如访问）与普通数组相同（**O(1)**）。
+
+![image-20250504151829645](./CSCM12.assets/image-20250504151829645.png)
+
+> **示例**：
+>
+> - 初始容量为4
+>   - 插入 `7`：无需扩容（`size=3 ≤ capacity=4`）。
+>   - 插入 `8`：触发扩容（`size=5 > capacity=4`），新容量为8，复制旧数据到新数组。
+
+<img src="./CSCM12.assets/image-20250504151940630.png" alt="image-20250504151940630" style="zoom:50%;" />
+
+## *Linked lists*
+
+![image-20250504152257874](./CSCM12.assets/image-20250504152257874.png)
+
+> **核心思想**：内存中的非连续存储便于快速删除和插入。
+> ​**定义6（递归定义）​**​：
+> 链表是以下两种形式之一：
+>
+> - 表示空列表的标志，**或**
+> - 包含值和对子链表的引用的单元。
+>
+> **关键点**：
+>
+> - **非连续内存**：节点通过指针动态连接，无需预分配连续空间。
+> - **递归结构**：与树类似，但每个节点只有**一个后继**（单链表）。
+
+### Doubly-Linked List
+
+![image-20250504152343681](./CSCM12.assets/image-20250504152343681.png)
+
+> **常用术语**：
+>
+> - **头节点（Head）**：第一个单元的值。
+> - **尾链（Tail）**：链表的剩余部分。
+>
+> **双向链表(Doubly-Linked List) --- 扩展功能**：
+>
+> * **O(n) 或者 O(1) 反转链表 **
+>   * <img src="./CSCM12.assets/image-20250504153056588.png" alt="image-20250504153056588" style="zoom:50%;" />
+>   * <img src="./CSCM12.assets/image-20250504153113857.png" alt="image-20250504153113857" style="zoom:50%;" />
+> * **O(n) O(1) 获取长度**
+>   * <img src="./CSCM12.assets/image-20250504153409317.png" alt="image-20250504153409317" style="zoom:50%;" />
+> * **O(n) O(1) 连接链表（Concatenation）**
+>   * <img src="./CSCM12.assets/image-20250504153627914.png" alt="image-20250504153627914" style="zoom:50%;" />
+> * <img src="./CSCM12.assets/image-20250504153713378.png" alt="image-20250504153713378" style="zoom:50%;" />
+
+![image-20250504154042914](./CSCM12.assets/image-20250504154042914.png)
+
+## *Queues, stacks and priority queues*
+
+<img src="./CSCM12.assets/image-20250504154225439.png" alt="image-20250504154225439" style="zoom:50%;" />
+
+> **栈**是一种存储元素并支持两种操作的数据结构：
+>
+> - **入栈（Push）**：在顶部添加元素。
+> - **出栈（Pop）**：提取最新插入的元素。
+>   它以**后进先出（LIFO）​**的方式处理数据。
+>
+> **队列**的接口与栈对称：
+>
+> - **入队（Enqueue）**：在末尾添加元素。
+> - **出队（Dequeue）**：提取最早插入的元素。
+>   它以**先进先出（FIFO）​**的方式处理数据。
+>
+> **优先队列**在队列基础上扩展：
+>
+> - **带优先级入队**：通过整数参数指定元素优先级。
+> - **出队**：移除**优先级最低的元素中最旧的一个**。
+>
+> ![image-20250504155344978](./CSCM12.assets/image-20250504155344978.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 软件工程
+
+## Catch exceptions - 案例
 
  
 
-# Test case
+## Test case - 案例
 
