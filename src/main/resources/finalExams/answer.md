@@ -247,34 +247,13 @@ END FUNCTION
 // for BT
 
 // For ordinary binary trees, since the node values do not have the sorting property of small on the left and large on the right, all nodes must be traversed to determine the maximum value.
+int maxValue = -10000;
 public int max(Node t) {    
-    // Recursively traverse all nodes
-    int currentMax = t.value;
-    if (t.left != null) {
-        currentMax = Math.max(currentMax, max(t.left)); //Recursively left tree
-    }
-    if (t.right != null) {
-        currentMax = Math.max(currentMax, max(t.right)); //Recursively right tree
-    }
-    return currentMax;
-}
-
-//Iteration using stack
-public int max(Node t) {
-	int maxValue = Integer.MIN_VALUE;
-    Stack<Node> stack = new Stack<>();
-    stack.push(t);
-    
-    while (!stack.isEmpty()) {
-        Node node = stack.pop();
-        maxValue = Math.max(maxValue, node.value);
-        
-        if (node.right != null) 
-          stack.push(node.right);
-        if (node.left != null) 
-          stack.push(node.left);
-    }
-    return maxValue;
+  if(t == null) return;
+  max(t.left);
+  // sout(t.data);
+  maxValue = max(maxValue, t.data);
+  max(t.right);
 }
 ```
 
