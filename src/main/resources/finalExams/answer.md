@@ -250,9 +250,10 @@ END FUNCTION
 int maxValue = -10000;
 public int max(Node t) {    
   if(t == null) return;
-  max(t.left);
   // sout(t.data);
   maxValue = max(maxValue, t.data);
+  
+  max(t.left);
   max(t.right);
 }
 ```
@@ -643,7 +644,7 @@ space comlexity: $O(d \times k)$
 
 ## Question 3: Trees (23 marks)
 
-![image-20250405160049275](./answer.assets/image-20250405160049275.png)
+<img src="./answer.assets/image-20250405160049275.png" alt="image-20250405160049275" style="zoom:50%;" />
 
 ![image-20250405160240122](./answer.assets/image-20250405160240122.png)
 
@@ -690,7 +691,7 @@ MyTree<String> nodeD = new MyTree<>("d");  // Node d (no children)
 MyTree<String> nodeB = new MyTree<>("b");  // Node b (no children)
 
 // 2. Create intermediate node with single child
-MyTree<String> nodeC = new MyTree<>("c", nodeD, null);  // Node c's child: d (right subtree null)
+MyTree<String> nodeC = new MyTree<>("c", nodeD);  // Node c's child: d (right subtree null)
 
 // 3. Create root node with two children
 MyTree<String> rootA = new MyTree<>("a", nodeB, nodeC);  // Node a's children: b(left) and c(right)
