@@ -1009,21 +1009,25 @@ public class AdjacencyList {
 The BFS traversal of TTree should be implemented using **Queue**.
 
 ```java
-void bfs(TTree root) {
+String bfs(TTree root) {
     if (root == null) return;
     
     Queue<TTree> queue = new LinkedList<>();
     queue.add(root);
+  
+  String s = "";
     
     while (!queue.isEmpty()) {
         TTree current = queue.poll();
         System.out.println(current.label);  // haddle current tree node
-        
+        s += current.label;
         // Join the queue in the order of left → middle → right (maintain the order of BFS)
         if (current.left != null) queue.add(current.left);
         if (current.center != null) queue.add(current.center);
         if (current.right != null) queue.add(current.right);
     }
+  
+  return s;
 }
 ```
 

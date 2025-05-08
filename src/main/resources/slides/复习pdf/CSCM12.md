@@ -253,9 +253,11 @@ question 4 暂时跳过, 分治算法一般就是递归树 树的高度是logn -
 - 步骤：
   1. 从第二个元素开始（第一个元素默认已排序）。
   2. 将当前元素与已排序部分的元素从后向前比较。
-  3. 如果当前元素更小，则将已排序元素向后移动一位。
+  3. 如果当前元素更小，==则将已排序元素向后移动一位==。
   4. 找到合适位置后插入当前元素。
   5. 重复直到所有元素排序完成。
+
+> 未排序的部分 每次取第一个元素 插入到已排序的部分 使得 已排序的部分长度+1
 
 <img src="./CSCM12.assets/image-20250506153932810.png" alt="image-20250506153932810" style="zoom:50%;" />
 
@@ -264,7 +266,7 @@ question 4 暂时跳过, 分治算法一般就是递归树 树的高度是logn -
 - **核心思想**：通过多次遍历数组，每次比较相邻元素并交换顺序错误的元素，将最大元素“冒泡”到数组末尾。
 - 步骤：
   1. 从数组的第一个元素开始，依次比较相邻的两个元素。
-  2. 如果前一个元素大于后一个元素，则交换它们。
+  2. 如果前一个元素大于后一个元素，则==交换==它们。
   3. 每次遍历会将当前未排序部分的最大元素放到正确位置。
   4. 重复直到所有元素排序完成。
 
@@ -275,7 +277,7 @@ question 4 暂时跳过, 分治算法一般就是递归树 树的高度是logn -
 - **核心思想**：分治法。将数组分成两半，分别排序后合并。
 - 步骤：
   1. 递归地将数组分成两半，直到每个子数组只有一个元素。
-  2. 合并两个已排序的子数组：
+  2. ==合并两个已排序的子数组==：
      - 创建一个临时数组，依次比较两个子数组的元素，将较小的放入临时数组。
      - 将剩余元素直接放入临时数组。
   3. 重复合并直到整个数组排序完成。
@@ -303,9 +305,9 @@ question 4 暂时跳过, 分治算法一般就是递归树 树的高度是logn -
 
 - **核心思想**：利用堆数据结构（完全二叉树），将数组构建为大顶堆，然后依次取出堆顶元素（最大值）并调整堆。
 - 步骤：
-  1. 构建大顶堆：从最后一个非叶子节点开始，调整堆使其满足父节点大于子节点。
-  2. 交换堆顶元素（最大值）与末尾元素，缩小堆的范围。
-  3. 重新调整堆，使其满足大顶堆性质。
+  1. ==**构建大顶堆**==：从最后一个非叶子节点开始，调整堆使其满足父节点大于子节点。
+  2. ==取堆顶==: 交换堆顶元素（最大值）与末尾元素，缩小堆的范围。
+  3. ==重新调整堆==，使其满足大顶堆性质。
   4. 重复直到所有元素排序完成。
 
 <img src="./CSCM12.assets/image-20250506154319039.png" alt="image-20250506154319039" style="zoom:50%;" />
@@ -323,6 +325,10 @@ question 4 暂时跳过, 分治算法一般就是递归树 树的高度是logn -
 <img src="./CSCM12.assets/image-20250506154427507.png" alt="image-20250506154427507" style="zoom:50%;" />
 
 <img src="./CSCM12.assets/image-20250506153508260.png" alt="image-20250506153508260" style="zoom:50%;" />
+
+![image-20250508154750125](./CSCM12.assets/image-20250508154750125.png)
+
+> 归并排序适用于 ==外部排序== (**external sorting** (e.g., disk files).) 
 
 # *Trees*
 
@@ -482,19 +488,185 @@ question 4 暂时跳过, 分治算法一般就是递归树 树的高度是logn -
 >
 > ![image-20250504155344978](./CSCM12.assets/image-20250504155344978.png)
 
+# Graphs
 
+## **Basic Notions** [**基本定义**]
 
+**Definition 7.** A directed graph *G* is a pair (*V*,*E*) where *V* is a finite set and *E*⊆*V*×*V*.
 
+- The elements of *V* are called **vertices**, and elements of *E* are called **edges**.
+- A **path** is a sequence of vertices $v_0,…,v_k$ such that ($v_i,v_{i+1}$)∈*E* for every *i*<*k*.
+- A **cycle** is a path of length >1 with  $v_0,…,v_k$ 
+- ==A graph is **connected** if between every two vertices there is a path.==
+  - <img src="./CSCM12.assets/image-20250508150544814.png" alt="image-20250508150544814" style="zoom:50%;" />
 
+- The degree of a vertex*u*is the number of neighbours, i.e., the size of {*v*∈*V*∣(*u*,*v*)∈*E* or (*v*,*u*)∈*E*}.
+  - For directed graphs, we define **in-degree** (incoming edges) and **out-degree** (outgoing edges).
+- Variations of graphs:
+  - **Undirected graphs**: Edges have no direction.
+  - **Multigraphs**: Multiple edges between two vertices.
+  - **Weighted graphs**: Edges labelled by integers (weight function *w*:*E*→N).
+- For a graph with*n*vertices:
+  - Maximum edges: *n*2 (directed) or 2*n*(*n*−1) (undirected, no self-loops).
+- A class of graphs C is **sparse** if max(*V*,*E*)∈C∣*E*∣ is not quadratic (i.e., *o*(*n*2)).
+  - <img src="./CSCM12.assets/image-20250508150722322.png" alt="image-20250508150722322" style="zoom:50%;" />
 
+## *Representations: adjacency matrices vs adjacency lists* [**图的表示方法：邻接矩阵 vs 邻接表**]
 
+There are two main useful ways of representing graphs, where vertices are indexed by consecutive integers (so essentially we take *V*={0,…,*n*−1}): **adjacency matrices** and **adjacency lists**.
 
+- **Adjacency Matrix**
 
+  - Records whether an edge exists between two vertices (or its weight).
+  - Always quadratic in the number of vertices (*O*(*n*2)).
+  - Good for random access to check if two nodes are connected (constant time *O*(1)).
+  - Enumerating neighbors of a vertex requires linear time (*O*(*n*)).
 
+- **Adjacency Lists**
 
+  - Consists of an array of lists, where the cell indexed by *u* contains the list of vertices *v* such that (*u*,*v*)∈*E*.
+  - Often includes a separate list for predecessors (vertices *v* such that (*v*,*u*)∈*E*) without significant efficiency loss.
+  - Checking if an edge exists between two arbitrary vertices takes linear time in the maximal degree of the two nodes (*O*(max(deg(*u*),deg(*v*)))).
+  - Enumerating neighbors of *v* is efficient (time proportional to the degree of *v*, *O*(deg(*v*))).
 
+- **Comparison**
 
+  - For **dense graphs**, adjacency matrices may be preferable.
+  - For **sparse graphs**, adjacency lists are generally better.
 
+  <img src="./CSCM12.assets/image-20250508151216165.png" alt="image-20250508151216165" style="zoom: 50%;" />
+
+## Algorithms: traversal, distances
+
+### **Graph Traversal Algorithms**
+
+**Depth-First Traversal (DFS)**:
+
+- Prioritizes exploring nodes along a path as deeply as possible before backtracking.
+- **Implementation**: Recursion or explicit stack.
+- **Time Complexity**: *O*(∣*E*∣) with adjacency list representation.
+
+**Breadth-First Traversal (BFS)**:
+
+- Explores all neighbors at the current level before moving deeper.
+- **Implementation**: Queue (replaces stack in DFS).
+- **Time Complexity**: *O*(∣*E*∣) with adjacency list.
+
+<img src="./CSCM12.assets/image-20250508151657173.png" alt="image-20250508151657173" style="zoom: 67%;" />
+
+### **Shortest Path Algorithms**
+
+- Distance in Weighted Graphs:
+
+  - Minimal sum of edge weights along a path (+∞ if no path exists).
+  - Unweighted graphs treat all edges as weight 1 (path length = distance).
+
+- **BFS for Unweighted Graphs**: Computes distances from a source node in *O*(∣*E*∣).
+
+- Dijkstra’s Algorithm (Weighted Graphs):
+
+  - Uses a priority queue to greedily select the closest unvisited node.
+
+  - **Pseudocode**:
+
+  - ```java
+    Dijkstra(G, source):
+        Q ← empty priority queue
+        Enqueue (source, 0) into Q
+        while Q is not empty:
+            (v, d) ← Dequeue minimal-priority element from Q
+            if v is unvisited:
+                Mark v as visited
+                Set distance[v] = d
+                For each edge (v → u) with weight w:
+                    Enqueue (u, d + w) into Q
+        return distance
+    ```
+
+  - **Complexity**: *O*(∣*E*∣+∣*V*∣log∣*V*∣) with binary heap.
+
+  - <img src="./CSCM12.assets/image-20250508151842999.png" alt="image-20250508151842999" style="zoom:50%;" />
+
+**Floyd-Warshall算法（全源最短路径）**
+
+- **Purpose**: Computes shortest paths between all pairs of nodes.
+
+- **Complexity**: *O*(∣*V*∣3) (matrix-based implementation).
+
+- Pseudocode:
+
+  ```python
+  FloydWarshall(M):
+      D ← copy of M
+      n ← dimension of M
+      for k from 0 to n-1:
+          for i from 0 to n-1:
+              for j from 0 to n-1:
+                  D[i][j] ← min(D[i][j], D[i][k] + D[k][j])
+      return D
+  ```
+
+- **Key Idea**: Dynamically updates shortest paths by considering intermediate nodes *k*.
+
+  - <img src="./CSCM12.assets/image-20250508152000434.png" alt="image-20250508152000434" style="zoom:50%;" />
+
+# Hashing
+
+![image-20250508152427084](./CSCM12.assets/image-20250508152427084.png)
+
+![image-20250508152431271](./CSCM12.assets/image-20250508152431271.png)
+
+```java
+package org.example.algorithms.hash;
+
+import java.util.*;
+
+public class Lab8_2 {
+    /**
+     * 对最多含 K 个不同值的数组排序（使用哈希表）
+     * @param arr 输入数组
+     */
+    public static void countSort(int[] arr) {
+        if (arr == null || arr.length == 0) return;
+
+        // 1. 统计频率
+        Map<Integer, Integer> freq = new HashMap<>();
+        for (int num : arr) {
+//            int count = freq.getOrDefault(num, 0);
+            int count;
+            if (freq.containsKey(num)) {
+                count = freq.get(num);
+            } else {
+                count = 0;
+            }
+            freq.put(num, count + 1);
+        }
+
+        // 2. 提取并排序键
+        List<Integer> sortedKeys = new ArrayList<>(freq.keySet()); // set是不能排序的,转成数组 [4,8,2,3,1]
+        Collections.sort(sortedKeys); // [1,2,3,4,8]
+
+        // 3.加上频率填充数组[1,2,2,3,3,4,8]
+        int index = 0;
+        for (int num : sortedKeys) {
+            int cnt = freq.get(num);
+            for (int i = 0; i < cnt; i++) {
+                arr[index++] = num;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        // 测试 countSort
+        int[] arr2 = {4, 2, 2, 8, 3, 3, 1};
+        countSort(arr2);
+        System.out.println("countSort 结果: " + Arrays.toString(arr2));
+        // 输出: [1, 2, 2, 3, 3, 4, 8]
+    }
+}
+```
+
+![image-20250508152540434](./CSCM12.assets/image-20250508152540434.png)
 
 
 
