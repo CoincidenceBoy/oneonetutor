@@ -301,7 +301,7 @@ question 4 暂时跳过, 分治算法一般就是递归树 树的高度是logn -
 
 ![image-20250506154651913](./CSCM12.assets/image-20250506154651913.png)
 
-#### 堆排序 (Heap Sort)
+### 堆排序 (Heap Sort)
 
 - **核心思想**：利用堆数据结构（完全二叉树），将数组构建为大顶堆，然后依次取出堆顶元素（最大值）并调整堆。
 - 步骤：
@@ -609,6 +609,26 @@ There are two main useful ways of representing graphs, where vertices are indexe
 - **Key Idea**: Dynamically updates shortest paths by considering intermediate nodes *k*.
 
   - <img src="./CSCM12.assets/image-20250508152000434.png" alt="image-20250508152000434" style="zoom:50%;" />
+  
+  - 
+  
+    ```java
+    public floydConnected(){
+      
+      
+      
+    }
+    
+    for(int k=0; k<n; k++){  // n是指节点的数量   k指通过 几个中间节点进行中转
+      for(int i=0; i<n; i++){
+        for(int j=0; j<n; j++){
+          D[i][j] = min(D[i][j], D[i][k] + D[k][j]);
+        }
+      }
+    }
+    ```
+  
+  - ![image-20250509171034824](./CSCM12.assets/image-20250509171034824.png)
 
 # Hashing
 

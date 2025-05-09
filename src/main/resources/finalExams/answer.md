@@ -341,18 +341,27 @@ public class StringSubtract {
         String str2 = args[1];
       
         HashMap<Character, Integer> times = new HashMap<>();
-        for (int i = 0; i < str2.length(); i++) {
-            char ch = str2.charAt(i);
-            times.put(ch, 1);
-        }
+       // for (int i = 0; i < str2.length(); i++) {
+       //     char ch = str2.charAt(i);
+       //     times.put(ch, 1);
+       // }
+       for(char c : str2){
+         times.put(ch, 1);
+       }
+      
         String result = "";
-        for (int i = 0; i < str1.length(); i++) {
-            char ch = str1.charAt(i);
-            if (!times.containsKey(ch)) {
-                result += ch;
-            }
+        //for (int i = 0; i < str1.length(); i++) {
+        //    char ch = str1.charAt(i);
+        //    if (!times.containsKey(ch)) {
+        //        result += ch;
+       //     }
+       // }
+      for(char c : str1){
+        if(!times.containsKey(c)){
+          result += ch;
         }
-        System.out.println(result);
+      }
+       System.out.println(result);
     }
 }
 ```
@@ -834,10 +843,8 @@ static int[] memo = new int[100]; // Assume n does not exceed 100
 static int derangements(int n) {
     if (n <= 1) return 1 - n;
     if (memo[n] != 0) return memo[n]; // Calculated direct return
-    
-    int result = n * (derangements(n - 1) + derangements(n - 2));
-    memo[n] = result; // Store calculation results
-    return result;
+   
+    return memo[n] = n * (derangements(n - 1) + derangements(n - 2)); // Store calculation results;
 }
 ```
 
